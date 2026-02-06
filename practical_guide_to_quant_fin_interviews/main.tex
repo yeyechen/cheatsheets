@@ -1,0 +1,73 @@
+\documentclass[10pt,a4paper,landscape]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.1in]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{parskip}
+
+% Page setup
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\columnseprule}{0.2pt}
+\setlength{\columnsep}{10pt}
+
+% Section formatting
+\titleformat{\section}
+  {\normalfont\fontsize{5}{6}\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2pt}{0pt}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{5}{6}\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{2pt}{0pt}
+
+% List formatting
+\setlist[itemize]{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt, itemsep=0pt}
+\setlist[enumerate]{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt, itemsep=0pt}
+
+% Reduce font size globally
+\renewcommand{\normalsize}{\fontsize{5}{6}\selectfont}
+\renewcommand{\small}{\fontsize{4}{5}\selectfont}
+\renewcommand{\footnotesize}{\fontsize{3}{4}\selectfont}
+
+% Custom chapter header
+\newcommand{\chapterheader}[1]{
+  \noindent\colorbox{black}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+    \color{white}\bfseries\normalsize #1}}%
+  \par\vspace{1pt}
+}
+
+% Document settings
+\pagestyle{empty}
+
+\begin{document}
+\normalsize
+
+\begin{multicols*}{3}
+
+
+\chapterheader{Chapter 1: General Principles}
+    \begin{enumerate}
+        \item Build a broad knowledge base: know the basics well.
+        \item Practice your interview skills: preparation and repetition build interview confidence and skill.
+        \item Listen carefully: understand the problem fully, ask clarifying questions, and note keywords and hidden clues.
+        \item Speak your mind: think aloud, demonstrate your analytical process, and focus on key concepts over trivial details.
+        \item Make reasonable assumptions: state and explain assumptions clearly to get feedback and build problem-solving frameworks.
+    \end{enumerate}
+\chapterheader{Chapter 2: Brain Teasers}
+
+\section*{2.1: Problem Simplification}
+
+    \begin{enumerate}
+        \item \textbf{Screwy pirates}: 
+    \end{enumerate}
+
+\end{multicols*}
+
+\end{document}
