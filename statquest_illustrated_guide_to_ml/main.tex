@@ -55,12 +55,12 @@
 \chapterheader{Chapter 1: Fundamental Concepts in ML}
 
 \begin{itemize}
-    \item Classifications VS Regressions
+    \item Classifications vs Regressions
     \item Training vs Testing
     \item Overfitting vs Underfitting (Bias-Variance Tradeoff)
     \item Regardless of which model you use, the most important thing is how it performs with the testing data.
-    \item Independent VS Dependent variables. Independent variables are also called features.
-    \item Discrete VS continuous data
+    \item Independent vs Dependent variables. Independent variables are also called features.
+    \item Discrete vs continuous data
 \end{itemize}
 
 
@@ -83,7 +83,7 @@
     \item Statistics provides a set of tools to quantify the variation that we find in everything and help us make predictions and quantify how confident we should be in those predictions
     \item Histogram: can be used to make classifications using the algorithm called Naive Bayes. Sometimes we have to try a bunch of different bin widths to get a clear picture, bin width too wide or too narrow don't give much info
     \item Probability Distribution: when we don't have much data, and we want to make precise probability estimation, we can use probability distributions. We can use the area under the probability distribution curve to calculate the probability of measuring a value in a range, even when we don't have enough data and there is no data points that fell in the target range
-    \item Discrete VS Continuous Probability Distributions
+    \item Discrete vs Continuous Probability Distributions
     \item Histograms are discrete distributions itself, but we require a lot of data for reliable estimation (we have blank spaces in histograms if data is not enough)
     \item Binomial distribution equation:
     \[
@@ -191,6 +191,52 @@
     \item Limitation: Logistic regression assumes that we can fit an s-shaped squiggle to the data. If that's not a valid assumption we need to use other models (Decision Tree or SVM or NN), or some other method that can handle more complicated relationships among the data
 \end{itemize}
 
+
+\chapterheader{Chapter 7: Naive Bayes}
+\begin{itemize}
+    \item The problem: we want to seperate the \textit{Normal} messages from \textit{Spam} messages.
+    \item Naive Bayes classifier is one of the simplest but surprisingly effective ML models.
+    \item Overview: given the message that begins with ``Dear Friend", and we want to classify it as either \textit{Normal} or \textit{Spam}.
+    We will need two different equations, one for \textit{Normal} and one for \textit{Spam}.
+    \[
+    p(N) \times p(\text{Dear} | N) \times p(\text{Friend} | N)
+    \]
+    \[
+    p(S) \times p(\text{Dear} | S) \times p(\text{Friend} | S)
+    \]
+    $p(N)$, $p(S)$ are \textbf{Prior Probabilities}. In a nut shell, prior probabilities are just guesses that we make without looking at the contents of a message.
+    Whichever equation gives us the larger score, tells us the final classifiction.
+    \item The most commonly used version of Naive Bayes is called \textbf{Multinomial Naive Bayes}.
+    \begin{enumerate}
+        \item Given labeled training data: 8 messages are \textit{Normal}, 4 messages are \textit{Spam}.
+        \item Calculate the probabilities of seeing each word given that they came from \textit{Normal} messages, and \textit{Spam} messages.
+        \item Calculate the Prior Probabilities $p(N) = \frac{\text{Num Normal}}{Num Total}$ and $p(S) = \frac{\text{Num Spam}}{Num Total}$, derived from the training data.
+        \item Finally, we classify ``Dear Friend'' to be \textit{Spam} or \textit{Normal}, based on the final score.
+    \end{enumerate}
+    \item The reason it is \textbf{naive}, is that the model treats all of the words independently, ignoring word ordering and phrasing. ``Dear Friend'' and ``Friend Dear'' get the same score.
+    \item To deal with missing data, Naive Bayes adds something called a \textbf{pseudocount} to each word, which is just an extra value added to each word, so that the probability of an unseen word is never 0.
+    \item When we have continuous data, we should use \textbf{Gaussian Naive Bayes}.
+    \begin{enumerate}
+        \item Given labeled training data, we can calculate the means and standard deviations of each features to draw Normal curves.
+        \item Calculate the Prior probabilities similarly.
+        \item Calculate the score of each class, by multiplying the prior probabilities, by the likelihood (the y-axis coordinates) of each feature.
+        \item Finally, make the classification based on the scores.
+    \end{enumerate}
+    \item To deal with very small likelihoods, which will cause the computer to \textit{underflow}, we calculate the sum of log-likelihoods, when aggregating for the score.
+    \item Q\&A:
+    \begin{itemize}
+        \item If my continuous data are not Gaussian, can I still use Gaussian Naive Bayes? \newline
+        Yes, we can use any statistical distribution in combination with Naive Bayes. For example, we can use \textbf{Exponential Distribution} and the model is called \textbf{Exponential Naive Bayes}.
+        \item What if some of my data/features are discrete and some of my data/features are continuous? Can I still use Naive Bayes? \newline
+        Yes, we can combine the histogram approach and the distribution approach.
+        \item How is Naive Bayes related to Bayes' Theorem? \newline
+        \textbf{Bayes' Theorem}:
+        \[
+        P(A \mid B) = \frac{P(B \mid A) \times P(A)}{P(B)}
+        \]
+        where $P(A \mid B)$ is the \textbf{posterior probability} (probability of A given B), $P(B \mid A)$ is the \textbf{likelihood} (probability of observing B given A), $P(A)$ is the \textbf{prior probability} (initial probability of A), and $P(B)$ is the \textbf{marginal probability} (total probability of observing B).
+        \end{itemize}
+\end{itemize}
 
 \end{multicols*}
 
