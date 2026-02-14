@@ -10,6 +10,10 @@
 \usepackage{titlesec}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{parskip}
 
 % Page setup
@@ -237,6 +241,107 @@
         where $P(A \mid B)$ is the \textbf{posterior probability} (probability of A given B), $P(B \mid A)$ is the \textbf{likelihood} (probability of observing B given A), $P(A)$ is the \textbf{prior probability} (initial probability of A), and $P(B)$ is the \textbf{marginal probability} (total probability of observing B).
         \end{itemize}
 \end{itemize}
+
+\chapterheader{Chapter 8: Assessing Model Performance}
+\subsection*{Confusion Matrix}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{cc|c|c|}
+        \cline{3-4}
+        & & \multicolumn{2}{c|}{\textbf{Predicted}} \\
+        \cline{3-4}
+        & & Positive & Negative \\
+        \hline
+        \multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Actual}}}
+        & Positive & TP & FN \\
+        \cline{2-4}
+        \multicolumn{1}{|c|}{}
+        & Negative & FP & TN \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+\begin{itemize}
+    \item $\text{Recall = Sensitivit = True Positive Rate} = \frac{TP}{TP + FN}$ \quad (of all actual positives, how many did we catch?)
+    \item $\text{Precision} = \frac{TP}{TP + FP}$ \quad (of all predicted positives, how many are correct?)
+    \item $\text{Specificity} = \frac{TN}{TN + FP}$ \quad (of all actual negatives, how many did we identify?)
+    \item $\text{False Positive Rate} = \frac{FP}{FP + TN} = 1 - \text{Specificity}$ \quad (of all actual negatives, how many did we misclassify?)
+\end{itemize}
+    
+\subsection*{ROC Curve}
+\begin{itemize}
+    \item ROC stands for \textbf{Receiver Operating Characteristic}, and the name comes from the graphs drawn during World War II that summarized how well radar operators correctly identified airplanes in radar signals.
+    \item AUC stands for \textbf{Area Under the Curve}, which is used for comparing models. The model with larger AUC is genrally better.
+    \item Problem: when data are imbalanced, let's say we have more negative class data points in our data. ROC graph is hard to interpret because the False Positive Rate barely budges above 0 before we have 100\% True Positive Rate.
+    \item Solution: Precision Recall graph.
+\end{itemize}
+\noindent
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\textbf{ROC Curve}\\[2pt]
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth,
+    height=\linewidth,
+    xlabel={FPR (1 - Specificity)},
+    ylabel={TPR (Sensitivity)},
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    xtick={0,0.5,1.0},
+    ytick={0,0.5,1.0},
+    grid=major,
+    grid style={gray!30},
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+]
+\addplot[dashed, gray] coordinates {(0,0) (1,1)};
+\addplot[thick, blue, smooth] coordinates {
+    (0,0) (0.02,0.4) (0.05,0.65) (0.1,0.8)
+    (0.2,0.9) (0.4,0.95) (0.6,0.98) (1,1)
+};
+\node[font=\footnotesize, gray] at (axis cs:0.65,0.45) {Random};
+\node[font=\footnotesize, blue] at (axis cs:0.35,0.88) {Good};
+\addplot[fill=blue, fill opacity=0.08, draw=none, smooth] coordinates {
+    (0,0) (0.02,0.4) (0.05,0.65) (0.1,0.8)
+    (0.2,0.9) (0.4,0.95) (0.6,0.98) (1,1)
+} -- (axis cs:1,0) -- cycle;
+\node[font=\footnotesize] at (axis cs:0.5,0.3) {AUC};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\textbf{Precision-Recall Curve}\\[2pt]
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth,
+    height=\linewidth,
+    xlabel={Recall},
+    ylabel={Precision},
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    xtick={0,0.5,1.0},
+    ytick={0,0.5,1.0},
+    grid=major,
+    grid style={gray!30},
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+]
+\addplot[dashed, gray] coordinates {(0,0.5) (1,0.5)};
+\addplot[thick, red, smooth] coordinates {
+    (0,1) (0.4,0.97) (0.65,0.93) (0.8,0.85)
+    (0.9,0.7) (0.95,0.55) (1,0.4)
+};
+\node[font=\footnotesize, gray] at (axis cs:0.35,0.42) {Random};
+\node[font=\footnotesize, red] at (axis cs:0.3,0.85) {Good};
+\addplot[fill=red, fill opacity=0.08, draw=none, smooth] coordinates {
+    (0,1) (0.4,0.97) (0.65,0.93) (0.8,0.85)
+    (0.9,0.7) (0.95,0.55) (1,0.4)
+} -- (axis cs:1,0) -- (axis cs:0,0) -- cycle;
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
 
 \end{multicols*}
 
