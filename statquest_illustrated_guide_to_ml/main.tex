@@ -343,6 +343,33 @@
 \end{tikzpicture}
 \end{minipage}
 
+
+\chapterheader{Chapter 9: Preventing Overfitting with Regularization}
+\begin{itemize}
+    \item \textbf{The Problem}: the fancier and more flexible a ML method is, the easier it is to overfit the training data.
+    \item \textbf{Solution}: Regularization, which reduces how sensitive the model is to the training data.
+    \item \textbf{Overfit}: low bias, high variance. Regularization increases bias a little bit, but in return a big decrease in variance.
+\end{itemize}
+
+\subsection*{Ridge Regression (L2 Regularization)}
+
+\[
+\text{Loss} = \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{p} \beta_j^2
+\]
+
+
+\subsection*{Lasso Regression (L1 Regularization)}
+
+\[
+\text{Loss} = \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{p} |\beta_j|
+\]
+
+\begin{itemize}
+    \item Difference between Ridge and Lasso, is that Ridge can only shrink the parameters to be arbitrarily small. Lasso can shrink parameters all the way to 0.
+    \item As such, Lasso is sometimes used for feature selection.
+    \item Lasso works better when coefficients are sparse, whereas Ridge works better when coefficients are dense.
+\end{itemize}
+
 \end{multicols*}
 
-\end{document}
+\end{document} 
